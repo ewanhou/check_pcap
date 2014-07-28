@@ -27,7 +27,7 @@ static int ip_handler(struct pkt_buff *pb)
 	if (len < (iph->ihl * 4))
 		goto hdr_error;
 
-	DBGMSG("saddr:%s daddr:%s\n", ip2str(ntohl(iph->saddr)), ip2str(ntohl(iph->daddr)));
+	//DBGMSG("saddr:%s daddr:%s\n", ip2str(ntohl(iph->saddr)), ip2str(ntohl(iph->daddr)));
 	
 	inet_proto_handler(pb);
 
