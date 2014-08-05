@@ -47,7 +47,8 @@ void ether_proto_handler(pcap_t *handle)
 		eth = (struct ethhdr *)pb_mac_header(pb);
 
 		/* We don't handle 802.3/802.2/SNAP frames */
-		if (eth->h_proto >= 1536) {
+
+		if (eth->h_proto >= 1536 && eth->h_proto < 8862) {
 			pkt_free(pb);
 			continue;
 		}
