@@ -16,6 +16,7 @@ struct vlan_hdr {
 static int vlan_handler(struct pkt_buff *pb)
 {
 	struct vlan_hdr *vlanh;
+	struct iphdr *iph;
 	int ret = 0;
 	unsigned int len;
 	unsigned short proto;
@@ -30,7 +31,13 @@ static int vlan_handler(struct pkt_buff *pb)
 	
 	proto = ntohs(vlanh->type);
 	if (proto == 0x0800){   // Temporarily designated
-		inet_proto_handler(pb);
+		if ((pb->tail - pb->data) < sizeof(struct iphdr))
+			goto hdr_error;
+		iph = (struct iphdr *)pb_network_header(pb);
+		if (iph->version == 4)
+			inet_proto_handler(pb);
+		else
+			printf("Not in case!");
 	}
 
 	return 0;
