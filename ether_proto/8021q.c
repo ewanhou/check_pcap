@@ -3,7 +3,14 @@
 #include <linux/ip.h>
 #include "../ether_proto.h"
 #include "../utils.h"
-#include "8021q.h"
+
+/* 802.1q vlan header */
+struct vlan_hdr {
+        __be16 pcp : 3;         /* priority code point (for 8021q) */
+        __be16 cfi : 1;         /* canonical format indicator */
+        __be16 vid : 12;        /* vlan identifier (0=no, fff=reserved) */
+        __be16 type;         /* encapsulated type */
+}__attribute ((packed));
 
 
 static int vlan_handler(struct pkt_buff *pb)
@@ -13,16 +20,18 @@ static int vlan_handler(struct pkt_buff *pb)
 	unsigned int len;
 	unsigned short proto;
 
-	vlanh = (struct vlan_hdr *)pb_network_header(pb);
-	
-	printf("\n[802.1Q] priority:%x cfi:%x id:%x type:%x", vlanh->pcp, vlanh->cfi, vlanh->vid, vlanh->type);
+	if ((pb->tail - pb->data) < sizeof(struct vlan_hdr))
+		goto hdr_error;	
 
-	proto = ntohs(vlanh->type);
-
+	vlanh = (struct vlan_hdr *)pb_network_header(pb);	
+	//printf("\n[802.1Q] priority:%x cfi:%x id:%x type:%x", vlanh->pcp, vlanh->cfi, vlanh->vid, vlanh->type);
 	pb->data += sizeof(*vlanh);
 	pb_set_network_header(pb, (pb->data - pb->head));
 	
-	inet_proto_handler(pb);
+	proto = ntohs(vlanh->type);
+	if (proto == 0x0800){   // Temporarily designated
+		inet_proto_handler(pb);
+	}
 
 	return 0;
 
