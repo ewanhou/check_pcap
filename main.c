@@ -16,8 +16,20 @@ int main(int argc, char **argv)
 	char errbuf[PCAP_ERRBUF_SIZE];
 	int i = 0, link_type;
 
-	if (argc != 2) {
+	if (!(argc >= 3)) {
 		printf("Usage: check_pcap <file>\n");
+		exit(1);
+	}  else if(argc > 5) {
+                printf("Usage: check_pacp <file>\n");
+                exit(1);
+	}
+
+	if(strcmp(argv[2], "statistic") == 0) {
+		printf("DO STATISTIC\n");
+	} else if(strcmp(argv[2], "ip") == 0) {
+		printf("DO IP query\n");
+	} else {
+		printf("Usage: check_pacp <file>\n");
 		exit(1);
 	}
 
