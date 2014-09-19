@@ -4,7 +4,6 @@
 #include <linux/if_ether.h>
 #include "ether_proto.h"
 
-
 LIST_HEAD(ether_proto_tbl);
 
 void ether_proto_register(struct ether_proto *eprot)

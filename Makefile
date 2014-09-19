@@ -11,7 +11,8 @@ INET_PROTO_OBJS = $(INET_PROTO_SRCS:%.c=%.o)
 CHECK_PCAP_SRCS = main.c pkt_buff.c pcap_stat.c utils.c ether_proto.c inet_proto.c
 CHECK_PCAP_OBJS = $(CHECK_PCAP_SRCS:%.c=%.o) $(ETHER_PROTO_OBJS) $(INET_PROTO_OBJS)
 
-LDFLAGS = -lpcap
+LDFLAGS = -Llibpcap-1.6.2 \
+	   -lpcap
 
 SUBDIRS = ether_proto inet_proto
 

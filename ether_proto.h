@@ -1,6 +1,6 @@
 #ifndef _ETHER_PROTO_H
 #define _ETHER_PROTO_H
-#include <pcap.h>
+#include "libpcap-1.6.2/pcap/pcap.h"
 #include "pkt_buff.h"
 #include "list.h"
 

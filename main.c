@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <netinet/ip.h>
 #include <arpa/inet.h>
-#include <pcap.h>
+#include "libpcap-1.6.2/pcap/pcap.h"
 #include "pkt_buff.h"
 #include "ether_proto.h"
 #include "utils.h"

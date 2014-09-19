@@ -2,7 +2,7 @@
 #define _PKT_BUFF_H
 
 #include <stdint.h>
-#include <pcap.h>
+#include "libpcap-1.6.2/pcap/pcap.h"
 
 
 struct pkt_buff {
