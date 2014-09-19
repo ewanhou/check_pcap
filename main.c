@@ -36,14 +36,14 @@ int main(int argc, char **argv)
 	}
 
 	if(strcmp(argv[2], "statistic") == 0) {
-		printf("DO STATISTIC\n");
+		printf("\nDO STATISTIC\n");
 		flag = 1;
 	} else if(strcmp(argv[2], "ip") == 0) {
-		printf("DO IP query\n");
+		printf("\nDO IP QUERY\n");
 		int ret_1 = isValidIpAddress(argv[3]);
 		int ret_2 = isValidIpAddress(argv[4]);
 		if(ret_1 == 0 || ret_2 == 0) {
-			printf("Wrong ip format\n");
+			printf("Error: Wrong ip format\n");
 			exit(1);
 		}
 		flag = 0;

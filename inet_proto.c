@@ -19,7 +19,7 @@ void inet_proto_register(struct inet_proto *iprot)
 		}
 	}
 
-	printf("Add inet proto `%s' handler\n", iprot->name);
+//	printf("Add inet proto `%s' handler\n", iprot->name);
 	list_add_tail(&iprot->list, &inet_proto_tbl);
 }
 

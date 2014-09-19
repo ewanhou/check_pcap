@@ -20,7 +20,7 @@ void ether_proto_register(struct ether_proto *eprot)
 		}
 	}
 
-	printf("Add ether proto `%s' handler\n", eprot->name);
+//	printf("Add ether proto `%s' handler\n", eprot->name);
 	list_add_tail(&eprot->list, &ether_proto_tbl);
 }
 
