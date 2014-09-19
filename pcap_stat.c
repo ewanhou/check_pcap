@@ -72,21 +72,40 @@ struct pcap_stat_node *pcap_stat_node_add(uint32_t saddr, uint32_t daddr,
 	return entry;
 }
 
-void pcap_stat_show(void)
+void pcap_stat_show(int flag, char *srcip, char *dstip)
 {
 	struct pcap_stat_node *entry;
 	struct hlist_node *walk, *tmp;
 	int i;
 	static char *proto_str[] = { "none", "icmp", "tcp", "udp" }; /* Need to sync with pcap_stat.h */
 
-	printf("sip | dip | protocol | l4 info | counts\n");
-	for (i = 0; i < PCAP_STAT_TABLE_SIZE; i++) {
-		if (hlist_empty(&pcap_stat_tbl[i]))
-			continue;
-		hlist_for_each_safe(walk, tmp, &pcap_stat_tbl[i]) {
-			entry = hlist_entry(walk, struct pcap_stat_node, hlist);
-			printf("%s %s %s %d/%d %lu\n", ip2str(entry->saddr), ip2str(entry->daddr), proto_str[entry->protocol], entry->param1, entry->param2, entry->count);
+	if(flag == 1){
+		//statistic Qurey
+		printf("sip | dip | protocol | l4 info | counts\n");
+		for (i = 0; i < PCAP_STAT_TABLE_SIZE; i++) {
+			if (hlist_empty(&pcap_stat_tbl[i]))
+				continue;
+			hlist_for_each_safe(walk, tmp, &pcap_stat_tbl[i]) {
+				entry = hlist_entry(walk, struct pcap_stat_node, hlist);
+				printf("%s %s %s %d/%d %lu\n", ip2str(entry->saddr), ip2str(entry->daddr), proto_str[entry->protocol], entry->param1, entry->param2, entry->count);
+			}
 		}
+	} else {
+		//ip query
+		//printf("\nsrcip = %s     dstip = %s\n", srcip, dstip);
+        	for (i = 0; i < PCAP_STAT_TABLE_SIZE; i++) {
+	        	if (hlist_empty(&pcap_stat_tbl[i]))
+                                continue;
+        		        hlist_for_each_safe(walk, tmp, &pcap_stat_tbl[i]) {
+	                        entry = hlist_entry(walk, struct pcap_stat_node, hlist);
+			        if(strcmp(srcip , ip2str(entry->saddr)) == 0 && strcmp(dstip, ip2str(entry->daddr)) == 0) {
+			 		printf("protocol | l4 info | counts\n");
+		                	//printf("%s %s %s %d/%d %lu\n", ip2str(entry->saddr), ip2str(entry->daddr), proto_str[entry->protocol], entry->param1, entry->param2, entry->count);
+		                        printf("%s %d/%d %lu\n", proto_str[entry->protocol], entry->param1, entry->param2, entry->count);
+				}
+                        }
+                }
 	}
+
 }
 

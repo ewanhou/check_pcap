@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 {
 	pcap_t *handle;
 	char errbuf[PCAP_ERRBUF_SIZE];
-	int i = 0, link_type;
+	int i = 0, link_type, flag = 1;
 
 	if (!(argc >= 3)) {
 		usage();
@@ -37,6 +37,7 @@ int main(int argc, char **argv)
 
 	if(strcmp(argv[2], "statistic") == 0) {
 		printf("DO STATISTIC\n");
+		flag = 1;
 	} else if(strcmp(argv[2], "ip") == 0) {
 		printf("DO IP query\n");
 		int ret_1 = isValidIpAddress(argv[3]);
@@ -45,7 +46,7 @@ int main(int argc, char **argv)
 			printf("Wrong ip format\n");
 			exit(1);
 		}
-
+		flag = 0;
 	} else {
 		usage();
 		exit(1);
@@ -71,7 +72,8 @@ int main(int argc, char **argv)
 
 	pcap_close(handle); // close the pcap file
 
-	pcap_stat_show();
+	//pcap_stat_show();
+	pcap_stat_show(flag, argv[3], argv[4]);
 
 	return 0;
 }

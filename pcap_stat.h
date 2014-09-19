@@ -27,7 +27,9 @@ extern struct pcap_stat_node *pcap_stat_node_get(uint32_t saddr, uint32_t daddr,
 extern struct pcap_stat_node *pcap_stat_node_add(uint32_t saddr, uint32_t daddr,
 			uint32_t protocol, uint16_t param1, uint16_t param2);
 
-extern void pcap_stat_show(void);
+//extern void pcap_stat_show(void);
+extern void pcap_stat_show(int flag, char *sip, char *dip);
+
 
 
 #endif
